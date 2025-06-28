@@ -1,7 +1,7 @@
 import re
 
 class TitleExtractor:
-    with open("brands.txt", "r", encoding="utf-8") as file:
+    with open("backend/brands.txt", "r", encoding="utf-8") as file:
         brands = [line.strip() for line in file.readlines()]
     brands_set = set(brands)
 
