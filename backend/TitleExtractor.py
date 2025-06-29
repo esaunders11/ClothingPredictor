@@ -2,20 +2,23 @@ import re
 
 class TitleExtractor:
     with open("backend/brands.txt", "r", encoding="utf-8") as file:
-        brands = [line.strip() for line in file.readlines()]
-    brands_set = set(brands)
+        brands = [line.strip() for line in file.readlines() if line.strip()]
+    brand_lookup = {brand.lower(): brand for brand in brands}
+    sorted_brand_keys = sorted(brand_lookup.keys(), key=lambda x: len(x.split()), reverse=True)
 
     category_keywords = {
         "Jacket": ["jacket", "parka", "anorak"],
-        "Shirt": ["shirt", "button-up", "flannel"],
+        "Shirt": ["shirt", "button-up", "flannel", "tee"],
         "Pants": ["pants", "jeans", "trousers", "slacks"],
         "Hoodie": ["hoodie", "pullover", "sweatshirt"]
     }
 
     sub_category_keywords = {
-    "Windbreaker": ["windbreaker"],
-    "Denim": ["denim", "jean"],
-    "Puffer": ["puffer", "down jacket"]
+        "Windbreaker": ["windbreaker"],
+        "Denim": ["denim", "jean"],
+        "Puffer": ["puffer", "down jacket"],
+        "Band": ["band", "tour"],
+        "Graphic": ["graphic", "print"]
     }
 
     def extract_fields(self, title):
@@ -27,10 +30,14 @@ class TitleExtractor:
         }
 
     def extract_brand(self, title):
-        for word in title.split():
-            clean_word = word.strip(",.!?").title()
-            if clean_word in self.brands_set:
-                return clean_word
+        title_clean = re.sub(r"[^\w\s]", "", title).lower()
+        title_words = title_clean.split()
+
+        for n in range(4, 0, -1):
+            for i in range(len(title_words) - n + 1):
+                phrase = " ".join(title_words[i:i+n])
+                if phrase in self.brand_lookup:
+                    return self.brand_lookup[phrase]
         return "Unknown"
     
     def match_keywords(self, title, keyword_map):

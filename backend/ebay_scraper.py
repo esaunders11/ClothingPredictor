@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from TitleExtractor import TitleExtractor
-from datetime import datetime
 import time
 
 def scrape_ebay(query):
@@ -11,7 +10,7 @@ def scrape_ebay(query):
     title_extractor = TitleExtractor()
     data = []
 
-    for page in range(1, 11):
+    for page in range(1, 16):
         url = base_url + str(page)
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -37,7 +36,6 @@ def scrape_ebay(query):
                     "title": title,
                     "brand": info["brand"],
                     "category": info["category"],
-                    "sub_category": info["sub_category"],
                     "condition": condition,
                     "size": info["size"],
                     "sell_price": float(price) if price.replace('.', '', 1).isdigit() else None,
@@ -51,6 +49,3 @@ def scrape_ebay(query):
     df = pd.DataFrame(data)
     return df
 
-
-df = scrape_ebay("band tees")
-df.to_csv("test_data.csv", index=False)
