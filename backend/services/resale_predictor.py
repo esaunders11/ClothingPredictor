@@ -3,8 +3,8 @@ import pandas as pd
 
 class resale_predictor:
     def __init__(self, platform):
-        self.model = pickle.load(open('backend/model/' + platform + '_XGB_price_model.pkl', 'rb'))
-        self.columns = pickle.load(open('backend/model/' + platform + '_model_features.pkl', 'rb'))
+        self.model = pickle.load(open('model/' + platform + '_XGB_price_model.pkl', 'rb'))
+        self.columns = pickle.load(open('model/' + platform + '_model_features.pkl', 'rb'))
 
     def predict(self, brand=None, category=None, condition=None, size=None):
         brand = brand or "Unknown"
