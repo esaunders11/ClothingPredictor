@@ -7,7 +7,9 @@ __pycache__/
 *.so
 
 backend/data/raw/
-backend/data/processed/listings.csv
+backend/data/processed/
+backed/mode/*.pkl
+*.pkl
 *.csv
 
 # Distribution / packaging
