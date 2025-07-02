@@ -1,4 +1,4 @@
-# Clothin Predictor
+# Clothing Predictor
 A full-stack web application that predicts the resale value of secondhand clothing items based on historical sales data from platforms like eBay and Poshmark.
 
 Users can input item details (brand, category, condition, size, and platform), and the app will return a machine learning–based price estimate using real-world sold listings.
